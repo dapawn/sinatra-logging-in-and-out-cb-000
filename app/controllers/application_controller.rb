@@ -1,5 +1,4 @@
 require_relative '../../config/environment'
-require_relative '../helpers/helpers'
 require 'pry'
 
 class ApplicationController < Sinatra::Base
@@ -14,11 +13,11 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/login' do
-    @user = User.new(username: params["username"], password: params["password"], balance: 0.0)
-    @user.save
+    @user = User.new(username: params["username"], password: params["password"], balance: 0)
+    @user.save 
     session[:user_id] = @user.id
 
-    if Helper.is_logged_in?(session)
+    if @user = User.find_by(username: params["username"])
       redirect '/account'
     else
       puts "Login Error"
@@ -27,11 +26,11 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/account' do
-    puts "account Error"
-    if Helper.is_logged_in?(session)
+    if @user = User.find_by(user_id: params["username"])
       @user = Helper.current_user(session)
       erb :account
     else
+      puts "account Error"
       erb :error
     end
   end
