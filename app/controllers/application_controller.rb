@@ -13,9 +13,11 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/login' do
-    binding.pry
-    if @user = User.find_by(username: params["username"])
-      session[:user_id] = @user.id
+    @user = User.new(username: params["username"], password: params["password"], balance: 0.0)
+    @user.save 
+    session[:user_id] = @user.id
+
+    if Helper.is_logged_in?(session)
       redirect '/account'
     else
       puts "Login Error"
