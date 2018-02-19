@@ -1,4 +1,6 @@
 require_relative '../../config/environment'
+require 'pry'
+
 class ApplicationController < Sinatra::Base
   configure do
     set :views, Proc.new { File.join(root, "../views/") }
