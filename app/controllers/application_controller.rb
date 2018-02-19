@@ -14,7 +14,7 @@ class ApplicationController < Sinatra::Base
 
   post '/login' do
     @user = User.new(username: params["username"], password: params["password"], balance: 0)
-    @user.save 
+    @user.save
     session[:user_id] = @user.id
 
     if @user = User.find_by(username: params["username"])
@@ -26,8 +26,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/account' do
-    if @user = User.find_by(user_id: params["username"])
-      @user = Helper.current_user(session)
+    if @user = User.find_by(user_id: session[:user_id])
       erb :account
     else
       puts "account Error"
