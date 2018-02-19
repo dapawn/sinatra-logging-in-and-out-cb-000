@@ -1,5 +1,5 @@
 require_relative '../../config/environment'
-require_relative './helper/helpers'
+require_relative './helpers/helpers'
 require 'pry'
 
 class ApplicationController < Sinatra::Base
